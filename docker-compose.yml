@@ -1,0 +1,73 @@
+version: '3'
+services:
+  cassandra_1:
+    image: cassandra:latest
+    container_name: cass_cont1
+    environment:
+      CASSANDRA_SEEDS: "cassandra_1,cassandra_2,cassandra_3"
+      CASSANDRA_CLUSTER_NAME: "CassCluster"
+    networks:
+      - cassandra-net
+    ports:
+      - "9042:9042"
+    volumes:
+      - ./conf_cass_1/cassandra/cassandra.yaml:/etc/cassandra/cassandra.yaml
+    deploy:
+      resources:
+        limits:
+          memory: 4g
+          
+  cassandra_2:
+    image: cassandra:latest
+    container_name: cass_cont2
+    environment:
+      CASSANDRA_SEEDS: "cassandra_1,cassandra_2,cassandra_3"
+      CASSANDRA_CLUSTER_NAME: "CassCluster"
+    networks:
+      - cassandra-net
+    ports:
+      - "9043:9042"
+    volumes:
+      - ./conf_cass_2/cassandra/cassandra.yaml:/etc/cassandra/cassandra.yaml
+    deploy:
+      resources:
+        limits:
+          memory: 4g
+
+  cassandra_3:
+    image: cassandra:latest
+    container_name: cass_cont3
+    environment:
+      CASSANDRA_SEEDS: "cassandra_1,cassandra_2,cassandra_3"
+      CASSANDRA_CLUSTER_NAME: "CassCluster"
+    networks:
+      - cassandra-net
+    ports:
+      - "9044:9042"  
+    volumes:
+      - ./conf_cass_3/cassandra/cassandra.yaml:/etc/cassandra/cassandra.yaml
+    deploy:
+      resources:
+        limits:
+          memory: 4g
+
+  # cassandra_4:
+  #   image: cassandra:latest
+  #   container_name: cass_cont4
+  #   environment:
+  #     CASSANDRA_SEEDS: "cassandra_1,cassandra_2,cassandra_3,cassandra_4"
+  #     CASSANDRA_CLUSTER_NAME: "CassCluster"
+  #   networks:
+  #     - cassandra-net
+  #   ports:
+  #     - "9045:9042"
+  #   volumes:
+  #     - ./conf_cass_4:/etc/cassandra
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 4g
+
+networks:
+  cassandra-net:
+    driver: bridge
