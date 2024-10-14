@@ -12,10 +12,7 @@ services:
       - "9042:9042"
     volumes:
       - ./conf_cass_1/cassandra/cassandra.yaml:/etc/cassandra/cassandra.yaml
-    deploy:
-      resources:
-        limits:
-          memory: 4g
+
           
   cassandra_2:
     image: cassandra:latest
@@ -29,10 +26,10 @@ services:
       - "9043:9042"
     volumes:
       - ./conf_cass_2/cassandra/cassandra.yaml:/etc/cassandra/cassandra.yaml
-    deploy:
-      resources:
-        limits:
-          memory: 4g
+    depends_on:
+      cassandra_1:
+        condition: service_started 
+
 
   cassandra_3:
     image: cassandra:latest
@@ -46,27 +43,41 @@ services:
       - "9044:9042"  
     volumes:
       - ./conf_cass_3/cassandra/cassandra.yaml:/etc/cassandra/cassandra.yaml
-    deploy:
-      resources:
-        limits:
-          memory: 4g
+    depends_on:
+      cassandra_2:
+        condition: service_started
 
   # cassandra_4:
   #   image: cassandra:latest
   #   container_name: cass_cont4
   #   environment:
-  #     CASSANDRA_SEEDS: "cassandra_1,cassandra_2,cassandra_3,cassandra_4"
+  #     CASSANDRA_SEEDS: "cassandra_1,cassandra_2,cassandra_3,cassandra_4,cassandra_5"
   #     CASSANDRA_CLUSTER_NAME: "CassCluster"
   #   networks:
   #     - cassandra-net
   #   ports:
   #     - "9045:9042"
   #   volumes:
-  #     - ./conf_cass_4:/etc/cassandra
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         memory: 4g
+  #     - ./conf_cass_4/cassandra/cassandra.yaml:/etc/cassandra/cassandra.yaml
+  #   depends_on:
+  #     cassandra_3:
+  #       condition: service_started
+
+  # cassandra_5:
+  #   image: cassandra:latest
+  #   container_name: cass_cont5
+  #   environment:
+  #     CASSANDRA_SEEDS: "cassandra_1,cassandra_2,cassandra_3,cassandra_4,cassandra_5"
+  #     CASSANDRA_CLUSTER_NAME: "CassCluster"
+  #   networks:
+  #     - cassandra-net
+  #   ports:
+  #     - "9046:9042"
+  #   volumes:
+  #     - ./conf_cass_5/cassandra/cassandra.yaml:/etc/cassandra/cassandra.yaml
+  #   depends_on:
+  #     cassandra_4:
+  #       condition: service_started
 
 networks:
   cassandra-net:
