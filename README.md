@@ -1,6 +1,6 @@
 # Đồ Án Môn QLTT
 
-#### Nhóm 8 - GV: Thầy Trịnh Hoàng Nhân
+#### Lớp IE103.P11.LT - Nhóm 8 - GV: Thầy Trịnh Hoàng Nhân
 - Phạm Phong - 24550034
 - Phạm Cao Hùng - 24550015
 - Nguyễn Minh Trường - 24550050
